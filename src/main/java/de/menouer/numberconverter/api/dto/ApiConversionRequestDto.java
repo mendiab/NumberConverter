@@ -1,5 +1,3 @@
 package de.menouer.numberconverter.api.dto;
 
-public class ApiConversionRequestDto {
-
-}
+public record ApiConversionRequestDto (String conversionType, String numberToConvert) {}
