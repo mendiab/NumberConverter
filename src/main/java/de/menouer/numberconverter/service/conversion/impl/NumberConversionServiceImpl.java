@@ -11,8 +11,7 @@ import de.menouer.numberconverter.model.NumeralsConversionType;
 import de.menouer.numberconverter.repository.AuditLogRepository;
 import de.menouer.numberconverter.service.conversion.NumberConversionService;
 import de.menouer.numberconverter.service.conversion.converter.NumeralsConverter;
-import de.menouer.numberconverter.service.conversion.converter.impl.BinaryToRomanNumeralsConverter;
-import de.menouer.numberconverter.service.conversion.converter.impl.DecimalToRomanNumeralsConverter;
+import de.menouer.numberconverter.service.conversion.converter.impl.RadixToRomanNumeralsConverter;
 import de.menouer.numberconverter.service.conversion.converter.impl.RomanNumeralsToEnglishLanguageNumbersConverter;
 
 @Service
@@ -45,8 +44,8 @@ public class NumberConversionServiceImpl implements NumberConversionService {
     private NumeralsConverter createConverter(String conversionType) {
         NumeralsConversionType type = NumeralsConversionType.valueOf(conversionType);
         return switch(type) {
-            case DECIMAL_TO_ROMAN -> new DecimalToRomanNumeralsConverter();
-            case BINARY_TO_ROMAN -> new BinaryToRomanNumeralsConverter();
+            case DECIMAL_TO_ROMAN -> new RadixToRomanNumeralsConverter(10);
+            case BINARY_TO_ROMAN -> new RadixToRomanNumeralsConverter(2);
             case ROMAN_TO_ENGLISH_LANGUAGE -> new RomanNumeralsToEnglishLanguageNumbersConverter();
         };
     }
