@@ -16,7 +16,7 @@ import de.menouer.numberconverter.api.dto.ApiConversionResponseDto;
 import de.menouer.numberconverter.api.dto.ApiConversionTypesResponseDto;
 import de.menouer.numberconverter.model.NumeralsConversionType;
 import de.menouer.numberconverter.service.conversion.NumberConversionService;
-import de.menouer.numberconverter.service.convesiontype.NumeralConversionTypeService;
+import de.menouer.numberconverter.service.conversiontype.NumeralConversionTypeService;
 
 @RestController
 @RequestMapping("api")
