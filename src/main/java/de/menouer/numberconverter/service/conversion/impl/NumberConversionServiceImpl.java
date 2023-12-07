@@ -13,6 +13,7 @@ import de.menouer.numberconverter.service.conversion.NumberConversionService;
 import de.menouer.numberconverter.service.conversion.converter.NumeralsConverter;
 import de.menouer.numberconverter.service.conversion.converter.impl.RadixToRomanNumeralsConverter;
 import de.menouer.numberconverter.service.conversion.converter.impl.RomanNumeralsToEnglishLanguageNumbersConverter;
+import de.menouer.numberconverter.service.conversion.converter.impl.RomanToDecimalNumeralsConverter;
 
 @Service
 public class NumberConversionServiceImpl implements NumberConversionService {
@@ -46,6 +47,7 @@ public class NumberConversionServiceImpl implements NumberConversionService {
         return switch(type) {
             case DECIMAL_TO_ROMAN -> new RadixToRomanNumeralsConverter(10);
             case BINARY_TO_ROMAN -> new RadixToRomanNumeralsConverter(2);
+            case ROMAN_TO_DECIMAL -> new RomanToDecimalNumeralsConverter();
             case ROMAN_TO_ENGLISH_LANGUAGE -> new RomanNumeralsToEnglishLanguageNumbersConverter();
         };
     }
