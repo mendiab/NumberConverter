@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,6 +20,7 @@ import de.menouer.numberconverter.service.conversion.NumberConversionService;
 import de.menouer.numberconverter.service.conversiontype.NumeralConversionTypeService;
 
 @RestController
+@CrossOrigin
 @RequestMapping("api")
 public class NumberConverterApi {
 
