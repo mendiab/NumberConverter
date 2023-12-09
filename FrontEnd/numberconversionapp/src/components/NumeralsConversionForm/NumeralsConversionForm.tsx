@@ -9,7 +9,7 @@ function NumeralsConversionForm() {
   const [conversionType, setConversionType] = useState("");
   const [conversionResult, setConversionResult] = useState("");
 
-  const fetchProducts = async () => {
+  const fetchAvailableConversionTypes = async () => {
     const { data } = await axios.get("http://localhost:8080/api/converters");
     const availableConversionTypes = data;
     setAvailableConversionTypes(availableConversionTypes);
@@ -17,7 +17,7 @@ function NumeralsConversionForm() {
   };
 
   useEffect(() => {
-    fetchProducts();
+    fetchAvailableConversionTypes();
   }, []);
 
   const onOptionChange = (e: any) => {
@@ -36,10 +36,7 @@ function NumeralsConversionForm() {
         numberToConvert
       );
       console.log(conversionRequest);
-      const response = await axios.post(
-        "http://localhost:8080/api/conversion",
-        conversionRequest
-      );
+      const response = await axios.post("http://localhost:8080/api/conversion", conversionRequest);
       setConversionResult(response.data.conversionResult);
       console.log(response.data.conversionResult);
     } catch (error) {
