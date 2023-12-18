@@ -1,24 +1,21 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+//import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+// import axios from "axios";
 import { ApiConversionRequest } from "./ApiConversionRequest";
 import { ApiConversionTypeResponse } from "./ApiConversionTypeResponse";
 
-function NumeralsConversionForm() {
-  const [availableConversionTypes, setAvailableConversionTypes] = useState([]);
+// Component Properties
+interface ConversionTypesProps {
+  availableConversionTypes: ApiConversionTypeResponse[];
+  // Function returning Promise<string>. Promise was used due to async / await call
+  onRequestSubmit: (convesionRequest: ApiConversionRequest) => Promise<string>;
+}
+
+function NumeralsConversionForm(
+  {availableConversionTypes,onRequestSubmit,}: ConversionTypesProps) {
   const [numberToConvert, setNumberToConvert] = useState("");
   const [conversionType, setConversionType] = useState("");
   const [conversionResult, setConversionResult] = useState("");
-
-  const fetchAvailableConversionTypes = async () => {
-    const { data } = await axios.get("http://localhost:8080/api/converters");
-    const availableConversionTypes = data;
-    setAvailableConversionTypes(availableConversionTypes);
-    console.log(availableConversionTypes);
-  };
-
-  useEffect(() => {
-    fetchAvailableConversionTypes();
-  }, []);
 
   const onOptionChange = (e: any) => {
     setConversionType(e.target.value);
@@ -35,10 +32,8 @@ function NumeralsConversionForm() {
         conversionType,
         numberToConvert
       );
-      console.log(conversionRequest);
-      const response = await axios.post("http://localhost:8080/api/conversion", conversionRequest);
-      setConversionResult(response.data.conversionResult);
-      console.log(response.data.conversionResult);
+      const conversionResultFromApi = await onRequestSubmit(conversionRequest); // MENOUER NOTES: HIER EINFACH RESULT SETZEN
+      setConversionResult(conversionResultFromApi);
     } catch (error) {
       console.error(error);
     }
@@ -47,6 +42,7 @@ function NumeralsConversionForm() {
   return (
     <div className="container">
       <form onSubmit={handleSubmit}>
+        {/* input number to convert*/}
         <label htmlFor="numberToConvert">Number to convert:</label>
         <input
           type="text"
@@ -60,7 +56,7 @@ function NumeralsConversionForm() {
 
         <br />
 
-        {/* Conversion Types as Radio-Buttons*/}
+        {/* Available Conversion-Types as Radio-Buttons*/}
         {availableConversionTypes.map((type: ApiConversionTypeResponse) => (
           <React.Fragment>
             <input
@@ -75,6 +71,8 @@ function NumeralsConversionForm() {
         ))}
         <button>Convert Number</button>
       </form>
+
+      {/* Conversion Result read-only field */}
       <div>
         <label>Conversion-Result: </label>
         <input readOnly value={conversionResult} />
