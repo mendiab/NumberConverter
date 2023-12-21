@@ -1,8 +1,12 @@
 package de.menouer.numberconverter.service.conversion.converter.impl;
 
+import org.springframework.stereotype.Service;
+
 import de.menouer.numberconverter.model.DecimalNumeralsInEnglishLanguage;
+import de.menouer.numberconverter.model.NumeralsConversionType;
 import de.menouer.numberconverter.service.conversion.converter.NumeralsConverter;
 
+@Service
 public class RomanNumeralsToEnglishLanguageNumbersConverter
 		implements
 			NumeralsConverter {
@@ -90,6 +94,11 @@ public class RomanNumeralsToEnglishLanguageNumbersConverter
 			}
 		}
 		throw new IllegalArgumentException("DecimalNumeralsInEnglishLanguage not found");
+	}
+
+	@Override
+	public boolean isMatching(NumeralsConversionType conversionType) {
+		return NumeralsConversionType.ROMAN_TO_ENGLISH_LANGUAGE == conversionType;
 	}
 
 }

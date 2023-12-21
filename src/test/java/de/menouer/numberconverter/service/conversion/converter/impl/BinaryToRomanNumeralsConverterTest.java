@@ -7,21 +7,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class RomanToDecimalNumeralsConverterTest {
+class BinaryToRomanNumeralsConverterTest {
 	
 	@Autowired
-	private RomanToDecimalNumeralsConverter converter;
+	private BinaryToRomanNumeralsConverter converter;
 
 	@Test
-	void romanXShouldBeConvertedToDecimal10() {
-		String result = converter.convert("X");
-		assertEquals("10", result);
+	void binary1000ShouldBeConvertedToVIII() {
+		String result = converter.convert("1000");
+		assertEquals("VIII", result);
 	}
 	
 	@Test
-	void romanMMXXXIShouldBeConvertedToDecimal2031() {
-		String result = converter.convert("MMXXXI");
-		assertEquals("2031", result);
+	void binary1001ShouldBeConvertedToIX() {
+		String result = converter.convert("1001");
+		assertEquals("IX", result);
 	}
 
 }

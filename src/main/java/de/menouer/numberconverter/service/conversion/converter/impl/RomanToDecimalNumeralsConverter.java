@@ -1,8 +1,12 @@
 package de.menouer.numberconverter.service.conversion.converter.impl;
 
+import org.springframework.stereotype.Service;
+
+import de.menouer.numberconverter.model.NumeralsConversionType;
 import de.menouer.numberconverter.model.RomanNumeral;
 import de.menouer.numberconverter.service.conversion.converter.NumeralsConverter;
 
+@Service
 /**
  * Menouer-Notes: Should be used for in {@link RomanNumeralsToEnglishLanguageNumbersConverter}
  */
@@ -49,7 +53,10 @@ public class RomanToDecimalNumeralsConverter implements NumeralsConverter {
 		}
 		return longestRomanNumeral;
 	}
-	
-	
 
+	@Override
+	public boolean isMatching(NumeralsConversionType conversionType) {
+		return NumeralsConversionType.ROMAN_TO_DECIMAL == conversionType;
+	}
+	
 }

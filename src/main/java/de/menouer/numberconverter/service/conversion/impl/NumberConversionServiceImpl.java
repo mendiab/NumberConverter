@@ -1,6 +1,7 @@
 package de.menouer.numberconverter.service.conversion.impl;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 
@@ -11,17 +12,17 @@ import de.menouer.numberconverter.model.NumeralsConversionType;
 import de.menouer.numberconverter.repository.AuditLogRepository;
 import de.menouer.numberconverter.service.conversion.NumberConversionService;
 import de.menouer.numberconverter.service.conversion.converter.NumeralsConverter;
-import de.menouer.numberconverter.service.conversion.converter.impl.RadixToRomanNumeralsConverter;
-import de.menouer.numberconverter.service.conversion.converter.impl.RomanNumeralsToEnglishLanguageNumbersConverter;
-import de.menouer.numberconverter.service.conversion.converter.impl.RomanToDecimalNumeralsConverter;
 
 @Service
 public class NumberConversionServiceImpl implements NumberConversionService {
 
     private final AuditLogRepository auditLogRepository;
+    
+    private final List<NumeralsConverter> converters;
 
-    public NumberConversionServiceImpl(AuditLogRepository auditLogRepository) {
+    public NumberConversionServiceImpl(AuditLogRepository auditLogRepository, List<NumeralsConverter> converters) {
         this.auditLogRepository = auditLogRepository;
+        this.converters = converters;
     }
 
     @Override
@@ -44,12 +45,7 @@ public class NumberConversionServiceImpl implements NumberConversionService {
 
     private NumeralsConverter createConverter(String conversionType) {
         NumeralsConversionType type = NumeralsConversionType.valueOf(conversionType);
-        return switch(type) {
-            case DECIMAL_TO_ROMAN -> new RadixToRomanNumeralsConverter(10);
-            case BINARY_TO_ROMAN -> new RadixToRomanNumeralsConverter(2);
-            case ROMAN_TO_DECIMAL -> new RomanToDecimalNumeralsConverter();
-            case ROMAN_TO_ENGLISH_LANGUAGE -> new RomanNumeralsToEnglishLanguageNumbersConverter();
-        };
+        return converters.stream().filter(converter -> converter.isMatching(type)).findFirst().get();
     }
 
 }

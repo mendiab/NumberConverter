@@ -1,24 +1,19 @@
 package de.menouer.numberconverter.service.conversion.converter.impl;
 
-import de.menouer.numberconverter.model.RomanNumeral;
-import de.menouer.numberconverter.service.conversion.converter.NumeralsConverter;
+import org.springframework.stereotype.Service;
 
+import de.menouer.numberconverter.model.RomanNumeral;
+
+@Service
 /**
  * Menouer Notes: Could be used to convert a number expressed in any radix (octal, hexa, ...) to roman numerals
  */
-public class RadixToRomanNumeralsConverter implements NumeralsConverter {
-	
-	private int radix;
-	
-	public RadixToRomanNumeralsConverter(int radix) {
-		this.radix = radix;
-	}
+public class RadixToRomanNumeralsConverter {
 
-	@Override
-	public String convert(String numberToConvertAsString) {
+	public String convert(String numberToConvertAsString, int radix) {
 
 		StringBuilder conversionResult = new StringBuilder();
-		int numberToConvert = convertStringToNumber(numberToConvertAsString);
+		int numberToConvert = convertStringToNumber(numberToConvertAsString, radix);
 
 		for (RomanNumeral romanNumber : RomanNumeral.values()) {
 			int romanNumberDecimalValue = romanNumber.getDecimalValue();
@@ -37,7 +32,7 @@ public class RadixToRomanNumeralsConverter implements NumeralsConverter {
 
 	}
 
-	private int convertStringToNumber(String numberToConvertAsString) {
+	private int convertStringToNumber(String numberToConvertAsString, int radix) {
 		int numberToConvert = Integer.parseInt(numberToConvertAsString, radix);
 		return numberToConvert;
 	}
